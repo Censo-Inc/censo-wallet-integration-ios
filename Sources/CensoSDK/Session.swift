@@ -164,10 +164,13 @@ public class Session {
         let publicKeyBytes = try self.channelKey.publicKeyData()
         let dateInMillis = String(Int(1000 * self.createdAt.timeIntervalSince1970))
         let dateInMillisBytes = dateInMillis.data(using: .utf8)!
-        let signature = try self.channelKey.signature(for: dateInMillisBytes)
+        var dataToSign = Data(dateInMillisBytes)
+        var nameData = self.name.data(using: .utf8)!
+        dataToSign.append(Data(SHA256.hash(data: nameData)))
+        let signature = try self.channelKey.signature(for: dataToSign)
         let encodedSignature = base64ToBase64Url(base64: signature)
-        let encodedName = base64ToBase64Url(base64: Base64EncodedString(data: self.name.data(using: .utf8)!))
-        let verified = try channelKey.verifySignature(for: dateInMillisBytes, signature: signature)
+        let encodedName = base64ToBase64Url(base64: Base64EncodedString(data: nameData))
+        let verified = try channelKey.verifySignature(for: dataToSign, signature: signature)
         if (verified) {
             self.onConnected = onConnected
             self.checkConnectionTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: checkConnection)

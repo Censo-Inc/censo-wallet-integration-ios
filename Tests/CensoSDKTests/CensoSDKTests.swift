@@ -11,7 +11,6 @@ final class CensoSDKTests: XCTestCase {
         configuration.protocolClasses = [MockURLProtocol.self]
         let urlSession = URLSession.init(configuration: configuration)
         let config = CensoWalletConfig()
-        //let expectation = self.expectation(description: "Session Done")
         let session = try Session(
             name: "name",
             apiUrl: config.apiUrl,
