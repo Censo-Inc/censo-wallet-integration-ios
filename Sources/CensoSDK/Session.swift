@@ -165,7 +165,7 @@ public class Session {
         let dateInMillis = String(Int(1000 * self.createdAt.timeIntervalSince1970))
         let dateInMillisBytes = dateInMillis.data(using: .utf8)!
         var dataToSign = Data(dateInMillisBytes)
-        var nameData = self.name.data(using: .utf8)!
+        let nameData = self.name.data(using: .utf8)!
         dataToSign.append(Data(SHA256.hash(data: nameData)))
         let signature = try self.channelKey.signature(for: dataToSign)
         let encodedSignature = base64ToBase64Url(base64: signature)
@@ -174,7 +174,7 @@ public class Session {
         if (verified) {
             self.onConnected = onConnected
             self.checkConnectionTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: checkConnection)
-            return "\(linkScheme)://\(linkVersion)/\(Base58.encode(publicKeyBytes.bytes))/\(dateInMillis)/\(encodedSignature)/\(encodedName)"
+            return "\(linkScheme)://import/\(linkVersion)/\(Base58.encode(publicKeyBytes.bytes))/\(dateInMillis)/\(encodedSignature)/\(encodedName)"
         } else {
             throw CensoSDKError.linkSignatureNotVerified
         }

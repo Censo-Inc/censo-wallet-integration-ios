@@ -1,5 +1,3 @@
-// The Swift Programming Language
-// https://docs.swift.org/swift-book
 import Foundation
 import CryptoKit
 
@@ -11,7 +9,7 @@ public struct CensoWalletConfig {
     public init(apiUrl: String? = nil, apiVersion: String? = nil, linkScheme: String? = nil, linkVersion: String? = nil) {
         self.apiUrl = apiUrl ?? "https://api.censo.co"
         self.apiVersion = apiVersion ?? "v1"
-        self.linkScheme = linkScheme ?? "censo-import"
+        self.linkScheme = linkScheme ?? "censo-main"
         self.linkVersion = linkVersion ?? "v1"
     }
 }
