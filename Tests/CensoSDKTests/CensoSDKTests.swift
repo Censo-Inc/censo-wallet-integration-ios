@@ -27,7 +27,7 @@ final class CensoSDKTests: XCTestCase {
         
         let link = try session.connect(onConnected: {})
         print(link)
-        XCTAssertTrue(link.starts(with: "censo-import://v1/"))
+        XCTAssertTrue(link.starts(with: "censo-main://import/v1/"))
     }
     
     func testSessionConnect() throws {
@@ -71,7 +71,7 @@ final class CensoSDKTests: XCTestCase {
         }
         let expectation = self.expectation(description: "Session Connected")
         let link = try session.connect(onConnected: { expectation.fulfill() })
-        XCTAssertTrue(link.starts(with: "censo-import://v1/"))
+        XCTAssertTrue(link.starts(with: "censo-main://import/v1/"))
         waitForExpectations(timeout: 5)
     }
     
@@ -125,7 +125,7 @@ final class CensoSDKTests: XCTestCase {
                 
             }
         })
-        XCTAssertTrue(link.starts(with: "censo-import://v1/"))
+        XCTAssertTrue(link.starts(with: "censo-main://import/v1/"))
         waitForExpectations(timeout: 5)
     }
     
